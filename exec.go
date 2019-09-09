@@ -14,6 +14,11 @@ func test(event *api.Event) {
 	log.Println(msg.Content)
 }
 
+func test2(event *api.Event) {
+	chc := event.Data.(*dsgo.Channel)
+	log.Println(chc.Name)
+}
+
 func main() {
 	bot := api.Bot{}
 	if len(os.Args) > 1 {
@@ -26,7 +31,8 @@ func main() {
 		"hi my friend": test,
 	}
 	bot.Handlers = api.HandlersList{
-		api.EVENTH_MESSAGE_CREATE: botutils_CMDSHandler,
+		api.EVENTH_MESSAGE_CREATE:    botutils_CMDSHandler,
+		api.EVENTH_GUILD_CHAN_CREATE: test2,
 	}
 	e := bot.Run()
 	if e != nil {
