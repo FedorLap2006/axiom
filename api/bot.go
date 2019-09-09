@@ -82,3 +82,12 @@ func (self *Bot) BaseHandler(s *dsgo.Session, event interface{}) {
 		ec.Data = event.(*dsgo.MessageUpdate).Message
 	}
 }
+
+// bot api methods
+func (self *Bot) SendMsg(chid string, msg string, tss bool) {
+	if tss {
+		self.Ds.ChannelMessageSend(chid, msg)
+	} else {
+		self.Ds.ChannelMessageSendTTS(chid, msg)
+	}
+}

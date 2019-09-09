@@ -21,8 +21,12 @@ func main() {
 	} else {
 		bot.Init(os.Getenv("DISCORD_BOTAPI_TOKEN"))
 	}
+	botutils_PREFIX = "^!"
+	botutils_CMDS = map[string]api.EventHandler{
+		"hi my friend": test,
+	}
 	bot.Handlers = api.HandlersList{
-		api.EVENTH_MESSAGE_CREATE: test,
+		api.EVENTH_MESSAGE_CREATE: botutils_CMDSHandler,
 	}
 	e := bot.Run()
 	if e != nil {
