@@ -14,6 +14,10 @@ func test(event *api.Event) {
 	log.Println(msg.Content)
 }
 
+func testPlugin(bot *api.Bot) error {
+	return nil
+}
+
 func test2(event *api.Event) {
 	chc := event.Data.(*dsgo.Channel)
 	log.Println(chc.Name)
@@ -34,11 +38,12 @@ func main() {
 		api.EVENTH_MESSAGE_CREATE:    api.Utils_CMDSHandler,
 		api.EVENTH_GUILD_CHAN_CREATE: test2,
 	}
+	bot.RegPluginFunc("test plugin", testPlugin)
 	e := bot.Run()
 	if e != nil {
 		log.Fatal(e)
 	}
-	log.Printf(`Discord %s running`, bot.Botu.Username)
+	log.Printf(`[Bot: %s] Bot Is Running`, bot.Botu.Username)
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc

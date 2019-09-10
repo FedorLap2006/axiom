@@ -1,4 +1,4 @@
-module jetbot
+module axiom
 
 go 1.12
 
